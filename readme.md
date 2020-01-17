@@ -65,3 +65,13 @@ https://opengameart.org/content/cat-sprites
 
 both
 https://opengameart.org/content/lpc-cats-and-dogs
+
+<i class="fas fa-paw"></i>
+<i class="fas fa-dog"></i>
+<i class="fas fa-bone"></i>
+<i class="fas fa-cat"></i>
+<i class="fas fa-cloud"></i>
+<i class="fas fa-crow"></i>
+<i class="fas fa-dove"></i>
+<i class="fas fa-heart"></i>
+<i class="fas fa-wind"></i>
