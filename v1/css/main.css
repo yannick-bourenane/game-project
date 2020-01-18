@@ -3,3 +3,101 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+body {
+    background-color: aquamarine;
+}
+
+.wrap {
+    width: 1200px;
+    margin: 25px auto;
+    background-color: white;
+    padding: 25px;
+}
+
+#map {
+    width: 600px;
+    margin: 0 auto;
+    height: 500px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#map .row {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+/* #map .row:first-child {
+    justify-content: flex-start;
+}
+
+#map .row:last-child {
+    justify-content: flex-end;
+} */
+
+#map .row .block {
+    background: url(../images/grass.png) repeat 0 0;
+    background-size: contain;
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid #666; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#map .row:first-of-type .block:first-of-type {
+    background-color: #e9e9e9;
+    border: 1px dotted;
+}
+
+#map .row:last-of-type .block:last-of-type {
+    background-color: dodgerblue;
+    border: 2px dashed;
+}
+
+#map .dog {
+    background: url('../images/dogx2.png') no-repeat -254px -4px;
+    width: 64px;
+    height: 64px;
+    border-radius: 36px;
+    position: absolute;
+    z-index: 10;
+}
+
+#map .dog.up {
+    background: url('../images/dogx2.png') no-repeat -254px -60px;
+}
+
+#map .dog.down {
+    background: url('../images/dogx2.png') no-repeat -254px -132px;
+}
+
+#map .dog.left {
+    background: url('../images/dogx2.png') no-repeat -254px -196px;
+}
+
+#map .dog.right {
+    background: url('../images/dogx2.png') no-repeat -254px -4px;
+}
+
+#map .dog.right.moving {
+    background: url('../images/doggo.gif') no-repeat center center;
+}
+
+/* #map .dog.right.moving {
+    background: url('../images/dogx2.png') no-repeat -128px -2px;
+}
+
+#map .dog.right.moving {
+    background: url('../images/dogx2.png') no-repeat -128px -2px;
+}
+
+#map .dog.right.moving {
+    background: url('../images/dogx2.png') no-repeat -128px -2px;
+} */
+
+*/

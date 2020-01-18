@@ -29,6 +29,7 @@ youreDead(score);
 Level 1 = easy = one row, destroy one obstacle to access the exit and finish => victory
 addingObstacle() // an ennemy can put back an obstacle
 Fontawesome for the icons (Attack/Heart/Logo)
+Implement diagonal moove (z + d)
 
 // Help
 
