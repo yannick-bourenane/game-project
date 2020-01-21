@@ -58,60 +58,67 @@ class Movable extends MapElement {
     let yNew = this.y;
     let getName = this.name;
     let getType = this.type;
-    const directionsList = ['up', 'down', 'left', 'right']
+    const directionsList = ["up", "down", "left", "right"];
 
     if (key === "z") {
-      direction = 'up';
-      targetMain = targetMap.querySelector(`.x${xNew}.y${yNew} .main.${getName}`);
+      direction = "up";
+      targetMain = targetMap.querySelector(
+        `.x${xNew}.y${yNew} .main.${getName}`
+      );
       targetMain.classList.remove(...directionsList);
       targetMain.classList.add(direction);
       let xFuture = xNew - aroundElement;
 
       function getFuturePosition(i, j) {
-        checkLimits(getName, xFuture + i, yNew + j)
+        checkLimits(getName, xFuture + i, yNew + j);
         checkEmpty(getName, getType, xFuture + i, yNew + j);
       }
       targetAroundElement(getFuturePosition);
       xNew--;
-
     }
     if (key === "s") {
-      direction = 'down';
-      targetMain = targetMap.querySelector(`.x${xNew}.y${yNew} .main.${getName}`);
+      direction = "down";
+      targetMain = targetMap.querySelector(
+        `.x${xNew}.y${yNew} .main.${getName}`
+      );
       targetMain.classList.remove(...directionsList);
       targetMain.classList.add(direction);
       let xFuture = xNew + aroundElement;
 
       function getFuturePosition(i, j) {
-        checkLimits(getName, xFuture + i, yNew + j)
+        checkLimits(getName, xFuture + i, yNew + j);
         checkEmpty(getName, getType, xFuture + i, yNew + j);
       }
       targetAroundElement(getFuturePosition);
       xNew++;
     }
     if (key === "q") {
-      direction = 'left';
-      targetMain = targetMap.querySelector(`.x${xNew}.y${yNew} .main.${getName}`);
+      direction = "left";
+      targetMain = targetMap.querySelector(
+        `.x${xNew}.y${yNew} .main.${getName}`
+      );
       targetMain.classList.remove(...directionsList);
       targetMain.classList.add(direction);
       let yFuture = yNew - aroundElement;
 
       function getFuturePosition(i, j) {
-        checkLimits(getName, xNew + i, yFuture + j)
+        checkLimits(getName, xNew + i, yFuture + j);
         checkEmpty(getName, getType, xNew + i, yFuture + j);
       }
       targetAroundElement(getFuturePosition);
       yNew--;
     }
     if (key === "d") {
-      direction = 'right';
-      targetMain = targetMap.querySelector(`.x${xNew}.y${yNew} .main.${getName}`);
+      direction = "right";
+      targetMain = targetMap.querySelector(
+        `.x${xNew}.y${yNew} .main.${getName}`
+      );
       targetMain.classList.remove(...directionsList);
       targetMain.classList.add(direction);
       let yFuture = yNew + aroundElement;
 
       function getFuturePosition(i, j) {
-        checkLimits(getName, xNew + i, yFuture + j)
+        checkLimits(getName, xNew + i, yFuture + j);
         checkEmpty(getName, getType, xNew + i, yFuture + j);
       }
       targetAroundElement(getFuturePosition);
@@ -159,15 +166,17 @@ class Movable extends MapElement {
       targetMap
         .querySelector(`.x${x}.y${y} .${getName}.main`)
         .classList.remove(`moving`);
-    }, 500);
+    }, 400);
 
     this.x = x;
     this.y = y;
 
-    if (x === mapWidth - aroundElement * 2 && y === mapHeight - aroundElement * 2) {
+    if (
+      x === mapWidth - aroundElement * 2 &&
+      y === mapHeight - aroundElement * 2
+    ) {
       victory();
     }
-
   }
 }
 // Defining a class for the doggy
@@ -182,31 +191,40 @@ class Doggy extends Movable {
     let targetFrontDom;
     let xTarget = this.x;
     let yTarget = this.y;
-    const targetFrontMain = targetMap.querySelector(`.x${this.x}.y${this.y} .main.${this.name}`)
+    const targetFrontMain = targetMap.querySelector(
+      `.x${this.x}.y${this.y} .main.${this.name}`
+    );
+    targetFrontMain.classList.add('bark');
+    clearTimeout(this.timeoutBark);
+    this.timeoutBark = setTimeout(function () {
+      targetMap
+      targetFrontMain.classList.remove(`bark`);
+    }, 400);
 
-    if (targetFrontMain.classList.contains('up')) {
+
+    if (targetFrontMain.classList.contains("up")) {
       xTarget = this.x - aroundElement * 2 - 1;
-    } else if (targetFrontMain.classList.contains('down')) {
+    } else if (targetFrontMain.classList.contains("down")) {
       xTarget = this.x + aroundElement * 2 + 1;
-    } else if (targetFrontMain.classList.contains('left')) {
+    } else if (targetFrontMain.classList.contains("left")) {
       yTarget = this.y - aroundElement * 2 - 1;
-    } else if (targetFrontMain.classList.contains('right')) {
+    } else if (targetFrontMain.classList.contains("right")) {
       yTarget = this.y + aroundElement * 2 + 1;
     }
     checkLimits(this.name, xTarget, yTarget);
     targetFront = updatedMap[xTarget][yTarget];
-    if (targetFront.includes('removable') && targetFront.includes('main')) {
+    if (targetFront.includes("removable") && targetFront.includes("main")) {
       function removeTargetFront(i, j) {
         // code
         updatedMap[xTarget + i][yTarget + j] = ``;
         // DOM
-        targetFrontDom = targetMap.querySelector(`.x${xTarget+i}.y${yTarget+j}`);
+        targetFrontDom = targetMap.querySelector(
+          `.x${xTarget + i}.y${yTarget + j}`
+        );
         targetFrontDom.innerHTML = ``;
       }
       targetAroundElement(removeTargetFront);
-
     }
-
   }
 }
 
@@ -269,22 +287,37 @@ class Enemy extends Movable {
 // Size of an element is currently 3*3
 const player1 = new Doggy("Rex", "dog", 1, 1, 3);
 
-const rock = new MapElement("Rock", "obstacle", 1, 4);
-const rock2 = new MapElement("Rock2", "obstacle", 15, 15);
-const rock3 = new MapElement("Rock3", "obstacle", 20, 20);
-const rock4 = new MapElement("Rock4", "obstacle", 8, 8);
+const rock0 = new MapElement("Rock", "obstacle", 4, 1);
+const rock1 = new MapElement("Rock2", "obstacle", 4, 10);
+const rock2 = new MapElement("Rock3", "obstacle", 7, 13);
+const rock3 = new MapElement("Rock4", "obstacle", 13, 1);
+const rock4 = new MapElement("Rock1", "obstacle", 13, 7);
+const rock5 = new MapElement("Rock1", "obstacle", 13, 10);
+const rock6 = new MapElement("Rock1", "obstacle", 13, 13);
 
+const cat1 = new MapElement("cat1", "obstacle removable", 1, 10);
+const cat2 = new MapElement("cat2", "obstacle removable", 10, 10);
+const cat3 = new MapElement("cat3", "obstacle removable", 13, 4);
 
-const cat1 = new MapElement("cat1", "obstacle removable", 12, 2);
-const cat2 = new MapElement("cat2", "obstacle removable", 18, 9);
-const enemy1 = new Enemy("Bad_cat", "enemy", 5, 5, 'ddddddddddssssszzzzzqqqqqqqqqq');
-const enemy2 = new Enemy("Bad_cat2", "enemy", 25, 25, 'qqqddd');
+const enemy1 = new Enemy("Bad_cat", "enemy", 7, 1, "dddddddddqqqqqqqqq");
+const enemy2 = new Enemy("Bad_cat2", "enemy", 25, 25, "zzzzzsssss");
 
 const obstaclesList = [];
-obstaclesList.push(rock, rock2, rock3, rock4, cat1, cat2);
+obstaclesList.push(
+  rock0,
+  rock1,
+  rock2,
+  rock3,
+  rock4,
+  rock5,
+  rock6,
+  cat1,
+  cat2,
+  cat3
+);
 
 const enemiesList = [];
-enemiesList.push(enemy1, enemy2)
+enemiesList.push(enemy1, enemy2);
 
 function checkLimits(name, x, y) {
   if (
@@ -302,8 +335,12 @@ function checkLimits(name, x, y) {
 
 function checkEmpty(name, type, x, y) {
   if (updatedMap[x][y] === `` || updatedMap[x][y].includes(`${name}`)) {
-    return true
-  } else if (updatedMap[x][y].includes(`enemy`) || updatedMap[x][y].includes(`dog`)) { // if enemy meets dog, or dog meets enemy
+    return true;
+  } else if (
+    updatedMap[x][y].includes(`enemy`) ||
+    updatedMap[x][y].includes(`dog`)
+  ) {
+    // if enemy meets dog, or dog meets enemy
     defeat();
   }
   throw new Error(
@@ -311,14 +348,13 @@ function checkEmpty(name, type, x, y) {
   );
 }
 
-
 function addElement(hero, enemies, obstacles) {
   updatedMap = [...emptyMap];
 
   function addHero(i, j) {
     // check issue with 0 0 doggo not throwing error message
     checkLimits(hero.name, hero.x, hero.y);
-    checkEmpty(hero.name, hero.type, hero.x + i, hero.y + j)
+    checkEmpty(hero.name, hero.type, hero.x + i, hero.y + j);
     updatedMap[hero.x + i][hero.y + j] = `${hero.name} ${hero.type}`;
     if (hero.x + i === hero.x && hero.y + j === hero.y)
       updatedMap[hero.x + i][hero.y + j] += ` main`;
@@ -328,24 +364,24 @@ function addElement(hero, enemies, obstacles) {
   function addEnemies(i, j) {
     enemies.forEach(enemy => {
       checkLimits(enemy.name, enemy.x, enemy.y);
-      checkEmpty(enemy.name, enemy.type, enemy.x + i, enemy.y + j)
+      checkEmpty(enemy.name, enemy.type, enemy.x + i, enemy.y + j);
       updatedMap[enemy.x + i][enemy.y + j] = `${enemy.name} ${enemy.type}`;
       if (enemy.x + i === enemy.x && enemy.y + j === enemy.y)
         updatedMap[enemy.x + i][enemy.y + j] += ` main`;
     });
-
   }
   targetAroundElement(addEnemies);
 
   function addObstacles(i, j) {
     obstacles.forEach(obstacle => {
       checkLimits(obstacle.name, obstacle.x + i, obstacle.y + j);
-      checkEmpty(obstacle.name, obstacle.type, obstacle.x + i, obstacle.y + j)
-      updatedMap[obstacle.x + i][obstacle.y + j] = `${obstacle.name} ${obstacle.type}`;
+      checkEmpty(obstacle.name, obstacle.type, obstacle.x + i, obstacle.y + j);
+      updatedMap[obstacle.x + i][
+        obstacle.y + j
+      ] = `${obstacle.name} ${obstacle.type}`;
       if (obstacle.x + i === obstacle.x && obstacle.y + j === obstacle.y)
         updatedMap[obstacle.x + i][obstacle.y + j] += ` main`;
     });
-
   }
   targetAroundElement(addObstacles);
 
@@ -353,8 +389,6 @@ function addElement(hero, enemies, obstacles) {
 }
 // adding all the elements
 addElement(player1, enemiesList, obstaclesList);
-
-console.log(updatedMap)
 // Show the map on the website with DOM, using previously created emptyMap
 function showMap() {
   let showMap = emptyMap.forEach((xRows, x) => {
@@ -402,5 +436,4 @@ function victory() {
 
 function defeat() {
   console.log("you lose !");
-
 }

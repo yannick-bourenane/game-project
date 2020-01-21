@@ -16,11 +16,13 @@ body {
 }
 
 #map {
+    background: url(../images/map_field.jpg) repeat 0 0;
     width: 700px;
     margin: 0 auto;
     height: 700px;
     display: flex;
     flex-wrap: wrap;
+    position: relative;
 }
 
 #map .row {
@@ -38,103 +40,199 @@ body {
 } */
 
 #map .row .block {
-    background: url(../images/grass.png) repeat 0 0;
-    background-size: contain;
     width: 100%;
     height: 100%;
-    /* border: 1px solid #666; */
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
 }
 
-#map .row:nth-of-type(1) .block:nth-of-type(1),
-#map .row:nth-of-type(1) .block:nth-of-type(2),
-#map .row:nth-of-type(1) .block:nth-of-type(3),
-#map .row:nth-of-type(2) .block:nth-of-type(1),
-#map .row:nth-of-type(2) .block:nth-of-type(2),
-#map .row:nth-of-type(2) .block:nth-of-type(3),
-#map .row:nth-of-type(3) .block:nth-of-type(1),
-#map .row:nth-of-type(3) .block:nth-of-type(2),
-#map .row:nth-of-type(3) .block:nth-of-type(3) {
-    background: #e9e9e9;
+#end {
+    position: absolute;
+    width: 57px;
+    height: 57px;
+    background: url(../images/doggo_house.png) center center no-repeat;
+    background-size: cover;
+    z-index: 9;
+    right: 0;
+    bottom: 0;
 }
 
-#map .row:nth-last-of-type(1) .block:nth-last-of-type(1),
-#map .row:nth-last-of-type(1) .block:nth-last-of-type(2),
-#map .row:nth-last-of-type(1) .block:nth-last-of-type(3),
-#map .row:nth-last-of-type(2) .block:nth-last-of-type(1),
-#map .row:nth-last-of-type(2) .block:nth-last-of-type(2),
-#map .row:nth-last-of-type(2) .block:nth-last-of-type(3),
-#map .row:nth-last-of-type(3) .block:nth-last-of-type(1),
-#map .row:nth-last-of-type(3) .block:nth-last-of-type(2),
-#map .row:nth-last-of-type(3) .block:nth-last-of-type(3) {
-    background: blue;
-}
+#map .row:nth-last-of-type(2) .block:nth-last-of-type(2) {}
 
 #map .dog.main {
-    background: url('../images/dogx2.png') no-repeat -254px -4px;
-    width: 64px;
-    height: 64px;
-    border-radius: 36px;
+    background: url(../images/dog_right.png) no-repeat center center;
+    width: 57px;
+    height: 57px;
     position: absolute;
     z-index: 10;
-    /*     -webkit-animation: fadeout 1s;
-    -moz-animation: fadeout 1s;
-    -ms-animation: fadeout 1s;
-    -o-animation: fadeout 1s;
-    animation: fadeout 1s; */
 }
 
-/* @keyframes fadeout {
-    from {
-        margin-left: 0;
-    }
-
-    to {
-        margin-left: 10px;
-    }
-} */
-
 #map .dog.main.up {
-    background: url('../images/dogx2.png') no-repeat -256px -60px;
+    background: url(../images/dog_up.png) no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    width: 24px;
+}
+
+#map .dog.main.up.moving {
+    background: url(../images/dog_up.png) no-repeat;
+    background-position-y: center;
+    animation: playv 0.4s steps(3) infinite;
 }
 
 #map .dog.main.down {
-    background: url('../images/dogx2.png') no-repeat -256px -132px;
+    background: url(../images/dog_down.png) no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    width: 24px;
+}
+
+#map .dog.main.down.moving {
+    background: url(../images/dog_down.png) no-repeat;
+    background-position-y: center;
+    animation: playv 0.4s steps(3) infinite;
 }
 
 #map .dog.main.left {
-    background: url('../images/dogx2.png') no-repeat -254px -196px;
+    background: url(../images/dog_left.png) no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+#map .dog.main.left.moving {
+    background: url(../images/dog_left.png) no-repeat;
+    background-position-y: center;
+    animation: playh 0.4s steps(3) infinite;
+    width: 55px;
 }
 
 #map .dog.main.right {
-    background: url('../images/dogx2.png') no-repeat -254px -4px;
+    background: url(../images/dog_right.png) no-repeat;
+    background-position-x: center;
+    background-position-y: center;
 }
 
 #map .dog.main.right.moving {
-    background: url('../images/doggo.gif') no-repeat center center;
+    background: url(../images/dog_right.png) no-repeat;
+    background-position-y: center;
+    animation: playh 0.4s steps(3) infinite;
+    width: 54px;
 }
 
-/* #map .dog.right.moving {
-    background: url('../images/dogx2.png') no-repeat -128px -2px;
+#map .dog.main.right.bark {
+    animation: barkingRight 0.2s;
 }
 
-#map .dog.right.moving {
-    background: url('../images/dogx2.png') no-repeat -128px -2px;
+@keyframes barkingRight {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(-10deg);
+    }
 }
 
-#map .dog.right.moving {
-    background: url('../images/dogx2.png') no-repeat -128px -2px;
-} */
+#map .dog.main.left.bark {
+    animation: barkingLeft 0.2s;
+}
+
+@keyframes barkingLeft {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(10deg);
+    }
+}
+
+#map .dog.main.up.bark {
+    animation: barkingUpDown 0.2s;
+}
+
+#map .dog.main.down.bark {
+    animation: barkingUpDown 0.2s;
+}
+
+@keyframes barkingUpDown {
+    from {
+        transform: rotate(-7deg);
+    }
+
+    to {
+        transform: rotate(7deg);
+    }
+}
+
+
+
+
+#map .enemy.main.right {
+    background: url(../images/black_cat_right.png) no-repeat;
+    background-position-y: center;
+    animation: playhCat 0.4s steps(3) infinite;
+    width: 49px;
+}
+
+#map .enemy.main.left {
+    background: url(../images/black_cat_left.png) no-repeat;
+    background-position-y: center;
+    animation: playhCat 0.4s steps(3) infinite;
+    width: 47px;
+}
+
+#map .enemy.main.up {
+    background: url(../images/black_cat_up.png) no-repeat;
+    background-position-y: center;
+    animation: playvCat 0.4s steps(3) infinite;
+    width: 26px;
+    height: 58px;
+}
+
+#map .enemy.main.down {
+    background: url(../images/black_cat_down.png) no-repeat;
+    background-position-y: center;
+    animation: playvCat 0.4s steps(3) infinite;
+    width: 26px;
+    height: 58px;
+}
+
+@keyframes playh {
+    100% {
+        background-position: -164px;
+    }
+}
+
+@keyframes playhCat {
+    100% {
+        background-position: -148px;
+    }
+}
+
+@keyframes playvCat {
+    100% {
+        background-position: -82px;
+    }
+}
+
+@keyframes playv {
+    100% {
+        background-position: -72px;
+    }
+}
 
 #map .obstacle.main {
     z-index: 9;
     position: absolute;
     width: 300%;
     height: 300%;
-    background-color: gray;
+    /* background: url(../images/tree-4.png) 109 172px; */
+    background: url(../images/tree-rs.png) no-repeat;
+    background-size: contain;
+    /*background: url(../images/nature_sprite.png) -225px -98px no-repeat;*/
 }
 
 #map .obstacle.removable.main {
@@ -142,7 +240,8 @@ body {
     position: absolute;
     width: 300%;
     height: 300%;
-    background-color: brown;
+    background: url(../images/zzz.gif) 0 -10px no-repeat, url(../images/sleeping_cat.png) center center no-repeat;
+    background-size: 40px 40px, contain;
 }
 
 #map .enemy.main {
