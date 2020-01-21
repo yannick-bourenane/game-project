@@ -26,7 +26,8 @@ function createMap(name, width, height) {
   title.textContent = name;
   return emptyMap;
 }
-createMap("DogGo", 50, 50);
+// for now it needs to be a square
+createMap("DogGo", 48, 48);
 //createMap('map2', 30, 30);
 function targetAroundElement(clbk) {
   for (let i = -1; i <= 1; i++) {
@@ -104,9 +105,7 @@ class Movable extends MapElement {
     }
     if (key === "d") {
       direction = 'right';
-      console.log(getName)
       targetMain = targetMap.querySelector(`.x${xNew}.y${yNew} .main.${getName}`);
-      //console.log(targetMain)
       targetMain.classList.remove(...directionsList);
       targetMain.classList.add(direction);
       let yFuture = yNew + aroundElement;
@@ -166,12 +165,9 @@ class Movable extends MapElement {
     this.y = y;
 
     if (x === mapWidth - aroundElement * 2 && y === mapHeight - aroundElement * 2) {
-      youWon();
+      victory();
     }
 
-    function youWon() {
-      console.log("you won !");
-    }
   }
 }
 // Defining a class for the doggy
@@ -187,7 +183,7 @@ class Doggy extends Movable {
     let xTarget = this.x;
     let yTarget = this.y;
     const targetFrontMain = targetMap.querySelector(`.x${this.x}.y${this.y} .main.${this.name}`)
-    // updatedMap doesnt have the main info and the direction
+
     if (targetFrontMain.classList.contains('up')) {
       xTarget = this.x - aroundElement * 2 - 1;
     } else if (targetFrontMain.classList.contains('down')) {
@@ -214,20 +210,81 @@ class Doggy extends Movable {
   }
 }
 
+class Enemy extends Movable {
+  constructor(name, type, x, y, mooveSequence) {
+    super(name, type, x, y);
+    // We'll work with 3 but we can change if we want
+    this.mooveSequence = mooveSequence;
+  }
+  mooveEnemies() {
+    const mooveSequence = this.mooveSequence;
+    const getEnemy = this;
+    const mooveInterval = 500;
+    let sequenceTotal = mooveSequence.length * mooveInterval;
+
+    function doSetTimeout(i) {
+      setTimeout(function () {
+        getEnemy.mooveTo(mooveSequence[i]);
+      }, i * mooveInterval);
+    }
+
+    function loopMooves() {
+      for (let i = 0; i < mooveSequence.length; i++) {
+        doSetTimeout([i]);
+      }
+    }
+    loopMooves();
+    setInterval(function () {
+      loopMooves();
+    }, sequenceTotal);
+
+    /*     setInterval(function () {
+          let intervalID = setInterval(function () {
+            enemy1.mooveTo('d');
+          }, 500);
+          setTimeout(function () {
+            clearInterval(intervalID);
+            intervalID = setInterval(function () {
+              enemy1.mooveTo('s');
+            }, 500);
+            setTimeout(function () {
+              clearInterval(intervalID);
+              intervalID = setInterval(function () {
+                enemy1.mooveTo('z');
+              }, 500);
+              setTimeout(function () {
+                clearInterval(intervalID);
+                intervalID = setInterval(function () {
+                  enemy1.mooveTo('q');
+                }, 500);
+                setTimeout(function () {
+                  clearInterval(intervalID);
+                }, 5000);
+              }, 3000);
+            }, 3000);
+          }, 5000);
+        }, 16000) */
+  }
+}
+// Size of an element is currently 3*3
 const player1 = new Doggy("Rex", "dog", 1, 1, 3);
-const enemy1 = new Movable("Bad_cat", "enemy", 5, 5);
-const rock = new MapElement("Rock", "obstacle", 11, 11);
+
+const rock = new MapElement("Rock", "obstacle", 1, 4);
 const rock2 = new MapElement("Rock2", "obstacle", 15, 15);
 const rock3 = new MapElement("Rock3", "obstacle", 20, 20);
 const rock4 = new MapElement("Rock4", "obstacle", 8, 8);
+
+
 const cat1 = new MapElement("cat1", "obstacle removable", 12, 2);
-const cat2 = new MapElement("cat1", "obstacle removable", 18, 9);
+const cat2 = new MapElement("cat2", "obstacle removable", 18, 9);
+const enemy1 = new Enemy("Bad_cat", "enemy", 5, 5, 'ddddddddddssssszzzzzqqqqqqqqqq');
+const enemy2 = new Enemy("Bad_cat2", "enemy", 25, 25, 'qqqddd');
 
 const obstaclesList = [];
 obstaclesList.push(rock, rock2, rock3, rock4, cat1, cat2);
 
 const enemiesList = [];
-enemiesList.push(enemy1)
+enemiesList.push(enemy1, enemy2)
 
 function checkLimits(name, x, y) {
   if (
@@ -246,6 +303,8 @@ function checkLimits(name, x, y) {
 function checkEmpty(name, type, x, y) {
   if (updatedMap[x][y] === `` || updatedMap[x][y].includes(`${name}`)) {
     return true
+  } else if (updatedMap[x][y].includes(`enemy`) || updatedMap[x][y].includes(`dog`)) { // if enemy meets dog, or dog meets enemy
+    defeat();
   }
   throw new Error(
     `${name} tries to take a space already occupied by ${updatedMap[x][y]}`
@@ -334,32 +393,14 @@ targetMap.addEventListener("keydown", e => {
   }
 });
 
-function mooveEnemies() {
-  setInterval(function () {
-    let intervalID = setInterval(function () {
-      enemy1.mooveTo('d');
-    }, 500);
-    setTimeout(function () {
-      clearInterval(intervalID);
-      intervalID = setInterval(function () {
-        enemy1.mooveTo('s');
-      }, 500);
-      setTimeout(function () {
-        clearInterval(intervalID);
-        intervalID = setInterval(function () {
-          enemy1.mooveTo('z');
-        }, 500);
-        setTimeout(function () {
-          clearInterval(intervalID);
-          intervalID = setInterval(function () {
-            enemy1.mooveTo('q');
-          }, 500);
-          setTimeout(function () {
-            clearInterval(intervalID);
-          }, 5000);
-        }, 3000);
-      }, 3000);
-    }, 5000);
-  }, 16000)
+enemy1.mooveEnemies();
+enemy2.mooveEnemies();
+
+function victory() {
+  console.log("you won !");
 }
-mooveEnemies();
+
+function defeat() {
+  console.log("you lose !");
+
+}
