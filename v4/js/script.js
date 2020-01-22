@@ -1,5 +1,44 @@
-function startGame() {
+const contentMain = document.getElementById("ajaxbox");
 
+(function() {
+  axios
+    .get(`/intro.html`)
+    .then(res => {
+      contentMain.innerHTML = res.data;
+      document
+        .querySelectorAll("#ajaxbox .link")
+        .forEach(link => (link.onclick = loadPage));
+    })
+    .catch(err => {
+      console.error(err);
+    });
+})();
+
+function loadPage(e) {
+  let loadGame = false;
+  const page = e.target.getAttribute("data-page");
+  console.log(page);
+  axios
+    .get(`/${page}.html`)
+    .then(res => {
+      contentMain.innerHTML = res.data;
+      if (page === `game`) {
+        startGame();
+      }
+      document.querySelectorAll("#ajaxbox .link").forEach(link => {
+        link.onclick = loadPage;
+      });
+    })
+    .catch(err => {
+      console.error(err);
+    });
+}
+
+function startGame() {
+  const audioBark = document.getElementById("audio_bark");
+  const audioBackground = document.getElementById("audio_background");
+  const audioCatWakingUp = document.getElementById("audio_cat_waking_up");
+  const audioCatAngry = document.getElementById("audio_cat_angry");
   const targetMap = document.getElementById("map");
   let addItem = document.createElement("div");
   const mapBlock = `<div class="block"></div>`;
@@ -30,6 +69,8 @@ function startGame() {
   }
   // for now it needs to be a square
   createMap("DogGo", 48, 48);
+
+  audioBackground.play();
   //createMap('map2', 30, 30);
   function targetAroundElement(clbk) {
     for (let i = -1; i <= 1; i++) {
@@ -133,18 +174,26 @@ function startGame() {
       const oldY = this.y;
       const getType = this.type;
       const getName = this.name;
+      /*       let stopMoove = false; */
 
       function removeInitialPosition(i, j) {
-        // Code
-        updatedMap[oldX + i][oldY + j] = ``;
         // DOM
         let item = targetMap.querySelector(
           `.x${oldX + i}.y${oldY + j} .${getName}`
         );
+        /*         if (item.classList.contains("stop")) {
+          console.log("stop detected");
+          return (stopMoove = true);
+        } */
+        // Code
+        updatedMap[oldX + i][oldY + j] = ``;
         item.remove();
       }
 
       function addNewPosition(i, j) {
+        /*         if (stopMoove) {
+          return;
+        } */
         let addMainClass = ``;
         if (x + i === x && y + j === y) addMainClass = ` main`;
         // Code
@@ -164,7 +213,7 @@ function startGame() {
 
       // Creates a timeout to remove the GIF 0.5seconds after the moove
       clearTimeout(this.timeoutID);
-      this.timeoutID = setTimeout(function () {
+      this.timeoutID = setTimeout(function() {
         targetMap
           .querySelector(`.x${x}.y${y} .${getName}.main`)
           .classList.remove(`moving`);
@@ -196,13 +245,13 @@ function startGame() {
       const targetFrontMain = targetMap.querySelector(
         `.x${this.x}.y${this.y} .main.${this.name}`
       );
-      targetFrontMain.classList.add('bark');
+      audioBark.play();
+      targetFrontMain.classList.add("bark");
       clearTimeout(this.timeoutBark);
-      this.timeoutBark = setTimeout(function () {
-        targetMap
+      this.timeoutBark = setTimeout(function() {
+        targetMap;
         targetFrontMain.classList.remove(`bark`);
       }, 400);
-
 
       if (targetFrontMain.classList.contains("up")) {
         xTarget = this.x - aroundElement * 2 - 1;
@@ -217,13 +266,23 @@ function startGame() {
       targetFront = updatedMap[xTarget][yTarget];
       if (targetFront.includes("removable") && targetFront.includes("main")) {
         function removeTargetFront(i, j) {
-          // code
-          updatedMap[xTarget + i][yTarget + j] = ``;
-          // DOM
           targetFrontDom = targetMap.querySelector(
             `.x${xTarget + i}.y${yTarget + j}`
           );
-          targetFrontDom.innerHTML = ``;
+          targetFrontDom.querySelector(`.removable`).classList.add("waking_up");
+          audioBark.play();
+          setTimeout(function() {
+            audioCatWakingUp.play();
+          }, 500);
+          //clearTimeout(timeoutWakingUp);
+          setTimeout(function() {
+            // code
+            targetFrontDom = targetMap.querySelector(
+              `.x${xTarget + i}.y${yTarget + j}`
+            );
+            updatedMap[xTarget + i][yTarget + j] = ``;
+            targetFrontDom.innerHTML = ``;
+          }, 1800);
         }
         targetAroundElement(removeTargetFront);
       }
@@ -243,7 +302,7 @@ function startGame() {
       let sequenceTotal = mooveSequence.length * mooveInterval;
 
       function doSetTimeout(i) {
-        setTimeout(function () {
+        setTimeout(function() {
           getEnemy.mooveTo(mooveSequence[i]);
         }, i * mooveInterval);
       }
@@ -254,36 +313,9 @@ function startGame() {
         }
       }
       loopMooves();
-      setInterval(function () {
+      setInterval(function() {
         loopMooves();
       }, sequenceTotal);
-
-      /*     setInterval(function () {
-            let intervalID = setInterval(function () {
-              enemy1.mooveTo('d');
-            }, 500);
-            setTimeout(function () {
-              clearInterval(intervalID);
-              intervalID = setInterval(function () {
-                enemy1.mooveTo('s');
-              }, 500);
-              setTimeout(function () {
-                clearInterval(intervalID);
-                intervalID = setInterval(function () {
-                  enemy1.mooveTo('z');
-                }, 500);
-                setTimeout(function () {
-                  clearInterval(intervalID);
-                  intervalID = setInterval(function () {
-                    enemy1.mooveTo('q');
-                  }, 500);
-                  setTimeout(function () {
-                    clearInterval(intervalID);
-                  }, 5000);
-                }, 3000);
-              }, 3000);
-            }, 5000);
-          }, 16000) */
     }
   }
   // Size of an element is currently 3*3
@@ -343,7 +375,19 @@ function startGame() {
       updatedMap[x][y].includes(`dog`)
     ) {
       // if enemy meets dog, or dog meets enemy
-      defeat();
+      audioCatAngry.play();
+      let targetDog = targetMap.querySelector(`.main.dog`);
+      targetDog.classList.add(`defeat`);
+      /*let targetEnemy = targetMap.querySelector(`.x${x}.y${y} .enemy`);
+      if (targetDog) targetDog.classList.add("stop");
+      if (targetEnemy) targetEnemy.classList.add("stop"); */
+
+      setTimeout(function() {
+        defeat();
+      }, 1500);
+      //defeat();
+
+      return;
     }
     throw new Error(
       `${name} tries to take a space already occupied by ${updatedMap[x][y]}`
@@ -377,7 +421,12 @@ function startGame() {
     function addObstacles(i, j) {
       obstacles.forEach(obstacle => {
         checkLimits(obstacle.name, obstacle.x + i, obstacle.y + j);
-        checkEmpty(obstacle.name, obstacle.type, obstacle.x + i, obstacle.y + j);
+        checkEmpty(
+          obstacle.name,
+          obstacle.type,
+          obstacle.x + i,
+          obstacle.y + j
+        );
         updatedMap[obstacle.x + i][
           obstacle.y + j
         ] = `${obstacle.name} ${obstacle.type}`;
@@ -433,10 +482,36 @@ function startGame() {
   enemy2.mooveEnemies();
 
   function victory() {
-    console.log("you won !");
+    (function() {
+      axios
+        .get(`/victory.html`)
+        .then(res => {
+          contentMain.innerHTML = res.data;
+          document
+            .querySelectorAll("#ajaxbox .link")
+            .forEach(link => (link.onclick = loadPage));
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    })();
   }
-
   function defeat() {
-    console.log("you lose !");
+    // kill the startGame function
+    //audioCatAngry.play();
+    function loadDefeat() {
+      axios
+        .get(`/defeat.html`)
+        .then(res => {
+          contentMain.innerHTML = res.data;
+          document
+            .querySelectorAll("#ajaxbox .link")
+            .forEach(link => (link.onclick = loadPage));
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
+    loadDefeat();
   }
 }

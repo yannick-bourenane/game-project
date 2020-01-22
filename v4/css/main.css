@@ -1,0 +1,304 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: aquamarine;
+}
+
+.wrap {
+    width: 1200px;
+    margin: 25px auto;
+    background-color: white;
+    padding: 25px;
+}
+
+#map {
+    background: url(../images/map_field.jpg) repeat 0 0;
+    width: 700px;
+    margin: 0 auto;
+    height: 700px;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+#map .row {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+/* #map .row:first-child {
+    justify-content: flex-start;
+}
+
+#map .row:last-child {
+    justify-content: flex-end;
+} */
+
+#map .row .block {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#end {
+    position: absolute;
+    width: 57px;
+    height: 57px;
+    background: url(../images/doggo_house.png) center center no-repeat;
+    background-size: cover;
+    z-index: 9;
+    right: 0;
+    bottom: 0;
+}
+
+#map .row:nth-last-of-type(2) .block:nth-last-of-type(2) {}
+
+#map .dog.main {
+    background: url(../images/dog_right.png) no-repeat center center;
+    width: 57px;
+    height: 57px;
+    position: absolute;
+    z-index: 10;
+}
+
+#map .dog.main.up {
+    background: url(../images/dog_up.png) no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    width: 24px;
+}
+
+#map .dog.main.up.moving {
+    background: url(../images/dog_up.png) no-repeat;
+    background-position-y: center;
+    animation: playv 0.4s steps(3) infinite;
+}
+
+#map .dog.main.down {
+    background: url(../images/dog_down.png) no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    width: 24px;
+}
+
+#map .dog.main.down.moving {
+    background: url(../images/dog_down.png) no-repeat;
+    background-position-y: center;
+    animation: playv 0.4s steps(3) infinite;
+}
+
+#map .dog.main.left {
+    background: url(../images/dog_left.png) no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+#map .dog.main.left.moving {
+    background: url(../images/dog_left.png) no-repeat;
+    background-position-y: center;
+    animation: playh 0.4s steps(3) infinite;
+    width: 55px;
+}
+
+#map .dog.main.right {
+    background: url(../images/dog_right.png) no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+#map .dog.main.right.moving {
+    background: url(../images/dog_right.png) no-repeat;
+    background-position-y: center;
+    animation: playh 0.4s steps(3) infinite;
+    width: 54px;
+}
+
+#map .dog.main.right.bark {
+    animation: barkingRight 0.2s;
+}
+
+@keyframes barkingRight {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(-10deg);
+    }
+}
+
+#map .dog.main.left.bark {
+    animation: barkingLeft 0.2s;
+}
+
+@keyframes barkingLeft {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(10deg);
+    }
+}
+
+#map .dog.main.up.bark {
+    animation: barkingUpDown 0.2s;
+}
+
+#map .dog.main.down.bark {
+    animation: barkingUpDown 0.2s;
+}
+
+@keyframes barkingUpDown {
+    from {
+        transform: rotate(-7deg);
+    }
+
+    to {
+        transform: rotate(7deg);
+    }
+}
+
+#map .dog.main.up.defeat,
+#map .dog.main.down.defeat {
+    animation: defeatV 1s;
+    transform: rotate(90deg);
+    margin-top: 10px;
+}
+
+#map .dog.main.left.defeat,
+#map .dog.main.right.defeat {
+    animation: defeatH 1s;
+    transform: rotate(-180deg);
+    background-position: top center;
+}
+
+@keyframes defeatH {
+    from {
+        transform: rotate(0deg);
+        background-position: bottom center;
+    }
+
+    to {
+        transform: rotate(-180deg);
+        background-position: top center;
+    }
+}
+
+@keyframes defeatV {
+    from {
+        transform: rotate(0deg);
+        margin-top: 0px;
+    }
+
+    to {
+        transform: rotate(90deg);
+        margin-top: 10px;
+    }
+}
+
+#map .enemy.main.right {
+    background: url(../images/black_cat_right.png) no-repeat;
+    background-position-y: center;
+    animation: playhCat 0.4s steps(3) infinite;
+    width: 49px;
+}
+
+#map .enemy.main.left {
+    background: url(../images/black_cat_left.png) no-repeat;
+    background-position-y: center;
+    animation: playhCat 0.4s steps(3) infinite;
+    width: 47px;
+}
+
+#map .enemy.main.up {
+    background: url(../images/black_cat_up.png) no-repeat;
+    background-position-y: center;
+    animation: playvCat 0.4s steps(3) infinite;
+    width: 26px;
+    height: 58px;
+}
+
+#map .enemy.main.down {
+    background: url(../images/black_cat_down.png) no-repeat;
+    background-position-y: center;
+    animation: playvCat 0.4s steps(3) infinite;
+    width: 26px;
+    height: 58px;
+}
+
+@keyframes playh {
+    100% {
+        background-position: -164px;
+    }
+}
+
+@keyframes playhCat {
+    100% {
+        background-position: -148px;
+    }
+}
+
+@keyframes playvCat {
+    100% {
+        background-position: -82px;
+    }
+}
+
+@keyframes playv {
+    100% {
+        background-position: -72px;
+    }
+}
+
+#map .obstacle.main {
+    z-index: 9;
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    /* background: url(../images/tree-4.png) 109 172px; */
+    background: url(../images/tree-rs.png) no-repeat;
+    background-size: contain;
+    /*background: url(../images/nature_sprite.png) -225px -98px no-repeat;*/
+}
+
+#map .obstacle.removable.main {
+    z-index: 9;
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    background: url(../images/zzz.gif) 0 -10px no-repeat, url(../images/sleeping_cat.png) center center no-repeat;
+    background-size: 40px 40px, contain;
+}
+
+#map .obstacle.removable.main.waking_up {
+    background: url(../images/standing_cat.png) 0 0 no-repeat;
+    opacity: 1;
+    animation: blink 0.6s steps(10) infinite;
+}
+
+@keyframes blink {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+#map .enemy.main {
+    z-index: 9;
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    background-color: red;
+}
