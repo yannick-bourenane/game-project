@@ -17,7 +17,6 @@ const contentMain = document.getElementById("ajaxbox");
 function loadPage(e) {
   let loadGame = false;
   const page = e.target.getAttribute("data-page");
-  console.log(page);
   axios
     .get(`/${page}.html`)
     .then(res => {
@@ -68,7 +67,7 @@ function startGame() {
     return emptyMap;
   }
   // for now it needs to be a square
-  createMap("DogGo", 48, 48);
+  createMap("DogGo", 51, 51);
 
   audioBackground.play();
   //createMap('map2', 30, 30);
@@ -320,38 +319,200 @@ function startGame() {
   }
   // Size of an element is currently 3*3
   const player1 = new Doggy("Rex", "dog", 1, 1, 3);
+  const tree = {};
+  const cat = {};
+  const enemy = {};
+  tree[0] = new MapElement("Tree", "obstacle", 4, 1);
+  tree[1] = new MapElement("Tree", "obstacle", 4, 4);
+  tree[2] = new MapElement("Tree", "obstacle", 4, 10);
+  tree[3] = new MapElement("Tree", "obstacle", 4, 13);
+  tree[4] = new MapElement("Tree", "obstacle", 4, 16);
+  tree[5] = new MapElement("Tree", "obstacle", 4, 19);
+  tree[6] = new MapElement("Tree", "obstacle", 4, 22);
+  tree[7] = new MapElement("Tree", "obstacle", 4, 28);
+  tree[8] = new MapElement("Tree", "obstacle", 4, 34);
+  tree[9] = new MapElement("Tree", "obstacle", 4, 40);
+  tree[10] = new MapElement("Tree", "obstacle", 4, 49);
+  tree[11] = new MapElement("Tree", "obstacle", 7, 13);
+  tree[12] = new MapElement("Tree", "obstacle", 7, 16);
+  tree[13] = new MapElement("Tree", "obstacle", 7, 19);
+  tree[14] = new MapElement("Tree", "obstacle", 7, 22);
+  tree[15] = new MapElement("Tree", "obstacle", 7, 28);
+  tree[16] = new MapElement("Tree", "obstacle", 7, 31);
+  tree[17] = new MapElement("Tree", "obstacle", 7, 34);
+  tree[18] = new MapElement("Tree", "obstacle", 7, 40);
+  tree[19] = new MapElement("Tree", "obstacle", 7, 43);
+  tree[20] = new MapElement("Tree", "obstacle", 7, 49);
+  tree[21] = new MapElement("Tree", "obstacle", 10, 19);
+  tree[22] = new MapElement("Tree", "obstacle", 10, 22);
+  tree[23] = new MapElement("Tree", "obstacle", 10, 28);
+  tree[24] = new MapElement("Tree", "obstacle", 10, 40);
+  tree[25] = new MapElement("Tree", "obstacle", 10, 49);
+  tree[26] = new MapElement("Tree", "obstacle", 13, 1);
+  tree[27] = new MapElement("Tree", "obstacle", 13, 7);
+  tree[28] = new MapElement("Tree", "obstacle", 13, 10);
+  tree[29] = new MapElement("Tree", "obstacle", 13, 19);
+  tree[30] = new MapElement("Tree", "obstacle", 13, 22);
+  tree[31] = new MapElement("Tree", "obstacle", 13, 40);
+  tree[32] = new MapElement("Tree", "obstacle", 16, 1);
+  tree[33] = new MapElement("Tree", "obstacle", 16, 7);
+  tree[34] = new MapElement("Tree", "obstacle", 16, 10);
+  tree[35] = new MapElement("Tree", "obstacle", 16, 13);
+  tree[36] = new MapElement("Tree", "obstacle", 16, 28);
+  tree[37] = new MapElement("Tree", "obstacle", 16, 40);
+  tree[38] = new MapElement("Tree", "obstacle", 19, 1);
+  tree[39] = new MapElement("Tree", "obstacle", 19, 13);
+  tree[40] = new MapElement("Tree", "obstacle", 19, 22);
+  tree[41] = new MapElement("Tree", "obstacle", 19, 25);
+  tree[42] = new MapElement("Tree", "obstacle", 19, 31);
+  tree[43] = new MapElement("Tree", "obstacle", 19, 43);
+  tree[44] = new MapElement("Tree", "obstacle", 19, 46);
+  tree[45] = new MapElement("Tree", "obstacle", 22, 7);
+  tree[46] = new MapElement("Tree", "obstacle", 22, 13);
+  tree[47] = new MapElement("Tree", "obstacle", 22, 31);
+  tree[48] = new MapElement("Tree", "obstacle", 22, 46);
+  tree[49] = new MapElement("Tree", "obstacle", 25, 4);
+  tree[50] = new MapElement("Tree", "obstacle", 25, 13);
+  tree[51] = new MapElement("Tree", "obstacle", 25, 19);
+  tree[52] = new MapElement("Tree", "obstacle", 25, 25);
+  tree[53] = new MapElement("Tree", "obstacle", 25, 31);
+  tree[54] = new MapElement("Tree", "obstacle", 25, 40);
+  tree[55] = new MapElement("Tree", "obstacle", 28, 25);
+  tree[56] = new MapElement("Tree", "obstacle", 28, 37);
+  tree[57] = new MapElement("Tree", "obstacle", 28, 43);
+  tree[58] = new MapElement("Tree", "obstacle", 28, 46);
+  tree[59] = new MapElement("Tree", "obstacle", 31, 1);
+  tree[60] = new MapElement("Tree", "obstacle", 31, 13);
+  tree[61] = new MapElement("Tree", "obstacle", 31, 31);
+  tree[62] = new MapElement("Tree", "obstacle", 31, 34);
+  tree[63] = new MapElement("Tree", "obstacle", 34, 1);
+  tree[64] = new MapElement("Tree", "obstacle", 34, 13);
+  tree[65] = new MapElement("Tree", "obstacle", 34, 19);
+  tree[66] = new MapElement("Tree", "obstacle", 34, 22);
+  tree[67] = new MapElement("Tree", "obstacle", 34, 25);
+  tree[68] = new MapElement("Tree", "obstacle", 34, 28);
+  tree[69] = new MapElement("Tree", "obstacle", 34, 34);
+  tree[70] = new MapElement("Tree", "obstacle", 34, 43);
+  tree[71] = new MapElement("Tree", "obstacle", 34, 46);
+  tree[72] = new MapElement("Tree", "obstacle", 34, 49);
+  tree[73] = new MapElement("Tree", "obstacle", 37, 1);
+  tree[74] = new MapElement("Tree", "obstacle", 37, 7);
+  tree[75] = new MapElement("Tree", "obstacle", 37, 10);
+  tree[76] = new MapElement("Tree", "obstacle", 37, 13);
+  tree[77] = new MapElement("Tree", "obstacle", 37, 34);
+  tree[78] = new MapElement("Tree", "obstacle", 37, 37);
+  tree[79] = new MapElement("Tree", "obstacle", 40, 25);
+  tree[80] = new MapElement("Tree", "obstacle", 40, 28);
+  tree[81] = new MapElement("Tree", "obstacle", 40, 40);
+  tree[82] = new MapElement("Tree", "obstacle", 40, 43);
+  tree[83] = new MapElement("Tree", "obstacle", 40, 46);
+  tree[84] = new MapElement("Tree", "obstacle", 43, 13);
+  tree[85] = new MapElement("Tree", "obstacle", 43, 16);
+  tree[86] = new MapElement("Tree", "obstacle", 43, 19);
+  tree[87] = new MapElement("Tree", "obstacle", 43, 22);
+  tree[88] = new MapElement("Tree", "obstacle", 43, 31);
+  tree[89] = new MapElement("Tree", "obstacle", 46, 13);
+  tree[90] = new MapElement("Tree", "obstacle", 46, 40);
+  tree[91] = new MapElement("Tree", "obstacle", 49, 40);
+  tree[92] = new MapElement("Tree", "obstacle", 1, 49);
 
-  const rock0 = new MapElement("Rock", "obstacle", 4, 1);
-  const rock1 = new MapElement("Rock2", "obstacle", 4, 10);
-  const rock2 = new MapElement("Rock3", "obstacle", 7, 13);
-  const rock3 = new MapElement("Rock4", "obstacle", 13, 1);
-  const rock4 = new MapElement("Rock1", "obstacle", 13, 7);
-  const rock5 = new MapElement("Rock1", "obstacle", 13, 10);
-  const rock6 = new MapElement("Rock1", "obstacle", 13, 13);
+  cat[0] = new MapElement("cat", "obstacle removable", 1, 10);
+  cat[1] = new MapElement("cat", "obstacle removable", 4, 25);
+  cat[2] = new MapElement("cat", "obstacle removable", 4, 43);
+  cat[3] = new MapElement("cat", "obstacle removable", 10, 10);
+  cat[4] = new MapElement("cat", "obstacle removable", 10, 37);
+  cat[5] = new MapElement("cat", "obstacle removable", 13, 4);
+  cat[6] = new MapElement("cat", "obstacle removable", 16, 19);
+  cat[7] = new MapElement("cat", "obstacle removable", 16, 49);
+  cat[8] = new MapElement("cat", "obstacle removable", 19, 7);
+  cat[9] = new MapElement("cat", "obstacle removable", 22, 25);
+  cat[10] = new MapElement("cat", "obstacle removable", 25, 1);
+  cat[11] = new MapElement("cat", "obstacle removable", 25, 46);
+  cat[12] = new MapElement("cat", "obstacle removable", 28, 13);
+  cat[13] = new MapElement("cat", "obstacle removable", 28, 31);
+  cat[14] = new MapElement("cat", "obstacle removable", 31, 25);
+  cat[15] = new MapElement("cat", "obstacle removable", 34, 16);
+  cat[16] = new MapElement("cat", "obstacle removable", 37, 4);
+  cat[17] = new MapElement("cat", "obstacle removable", 40, 13);
+  cat[18] = new MapElement("cat", "obstacle removable", 40, 34);
+  cat[19] = new MapElement("cat", "obstacle removable", 40, 49);
+  cat[20] = new MapElement("cat", "obstacle removable", 43, 40);
+  cat[21] = new MapElement("cat", "obstacle removable", 49, 13);
 
-  const cat1 = new MapElement("cat1", "obstacle removable", 1, 10);
-  const cat2 = new MapElement("cat2", "obstacle removable", 10, 10);
-  const cat3 = new MapElement("cat3", "obstacle removable", 13, 4);
-
-  const enemy1 = new Enemy("Bad_cat", "enemy", 7, 1, "dddddddddqqqqqqqqq");
-  const enemy2 = new Enemy("Bad_cat2", "enemy", 25, 25, "zzzzzsssss");
-
-  const obstaclesList = [];
-  obstaclesList.push(
-    rock0,
-    rock1,
-    rock2,
-    rock3,
-    rock4,
-    rock5,
-    rock6,
-    cat1,
-    cat2,
-    cat3
+  enemy[0] = new Enemy("cat_black", "enemy", 7, 1, "dddddddddqqqqqqqqq");
+  enemy[1] = new Enemy(
+    "cat_black",
+    "enemy",
+    1,
+    40,
+    "qqqqqqqqqqqqqqqqqqdddddddddddddddddd"
+  );
+  enemy[2] = new Enemy(
+    "cat_black",
+    "enemy",
+    1,
+    43,
+    "dddssssssssssssdddqqqzzzzzzzzzzzzqqq"
+  );
+  enemy[3] = new Enemy(
+    "cat_black",
+    "enemy",
+    16,
+    22,
+    "dddzzzzzzzzzsssssssssqqq"
+  );
+  enemy[4] = new Enemy(
+    "cat_black",
+    "enemy",
+    13,
+    31,
+    "dddsssdddsssssssssqqqssszzzdddzzzzzzzzzqqqzzzqqq"
+  );
+  enemy[5] = new Enemy(
+    "cat_black",
+    "enemy",
+    34,
+    10,
+    "zzzzzzzzzzzzzzzsssssssssssssss"
+  );
+  enemy[6] = new Enemy(
+    "cat_black",
+    "enemy",
+    22,
+    16,
+    "sssssssssddddddzzzzzzzzzqqqqqq"
+  );
+  enemy[7] = new Enemy(
+    "cat_black",
+    "enemy",
+    49,
+    1,
+    "zzzdddzzzdddzzzdddqqqsssqqqsssqqqsss"
+  );
+  enemy[8] = new Enemy(
+    "cat_black",
+    "enemy",
+    46,
+    19,
+    "dddddddddsssddddddzzzzzzdddzzzsssqqqssssssqqqqqqzzzqqqqqqqqq"
   );
 
+  const obstaclesList = [];
   const enemiesList = [];
-  enemiesList.push(enemy1, enemy2);
+
+  // Pushing 91 obstacles
+
+  function pushElements(element, number, arr) {
+    for (let i = 0; i < number; i++) {
+      element[i].name += i;
+      console.log(element[i]);
+      arr.push(element[i]);
+    }
+  }
+
+  pushElements(tree, 93, obstaclesList);
+  pushElements(cat, 21, obstaclesList);
+  pushElements(enemy, 9, enemiesList);
 
   function checkLimits(name, x, y) {
     if (
@@ -377,7 +538,7 @@ function startGame() {
       // if enemy meets dog, or dog meets enemy
       audioCatAngry.play();
       let targetDog = targetMap.querySelector(`.main.dog`);
-      targetDog.classList.add(`defeat`);
+      if (targetDog) targetDog.classList.add(`defeat`);
       /*let targetEnemy = targetMap.querySelector(`.x${x}.y${y} .enemy`);
       if (targetDog) targetDog.classList.add("stop");
       if (targetEnemy) targetEnemy.classList.add("stop"); */
@@ -478,9 +639,9 @@ function startGame() {
     }
   });
 
-  enemy1.mooveEnemies();
-  enemy2.mooveEnemies();
-
+  for (let i = 0; i < 9; i++) {
+    enemy[i].mooveEnemies();
+  }
   function victory() {
     (function() {
       axios
@@ -514,4 +675,5 @@ function startGame() {
     }
     loadDefeat();
   }
+  console.log(updatedMap);
 }
