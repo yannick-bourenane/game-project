@@ -2,7 +2,7 @@ const contentMain = document.getElementById("ajaxbox");
 
 (function () {
   axios
-    .get(`/intro.html`)
+    .get(`intro.html`)
     .then(res => {
       contentMain.innerHTML = res.data;
       document
@@ -18,7 +18,7 @@ function loadPage(e) {
   let loadGame = false;
   const page = e.target.getAttribute("data-page");
   axios
-    .get(`/${page}.html`)
+    .get(`${page}.html`)
     .then(res => {
       contentMain.innerHTML = res.data;
       if (page === `game`) {
@@ -671,7 +671,7 @@ function startGame() {
   function victory() {
     (function () {
       axios
-        .get(`/victory.html`)
+        .get(`victory.html`)
         .then(res => {
           contentMain.innerHTML = res.data;
           document
@@ -698,7 +698,7 @@ function startGame() {
     //audioCatAngry.play();
     function loadDefeat() {
       axios
-        .get(`/defeat.html`)
+        .get(`defeat.html`)
         .then(res => {
           contentMain.innerHTML = res.data;
           document
