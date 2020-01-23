@@ -1,9 +1,25 @@
 <div id="rules">
-    <div class="close"></div>
     <h1>Rules</h1>
-    <p>Your goal is to <strong>reach the end</strong> of the street</p>
-    <p>You can remove some obstacle with the <span class="key">space</span> Key</p>
-    <p>It will <strong>decrease your action point total</strong>, so use it wisely</p>
-    <p>If an ennemy touches you, you loose !</p>
-    <a data-page="intro" class="link">Retour</a>
+    <div id="actions_list">
+        <div class="action_block">
+            <p class="title_keyboard">Moove</p>
+
+            <span class="key" id="keyz">Z</span>
+            <div id="lowerkey"><span class="key" id="keyq">Q</span>
+                <span class="key" id="keys">S</span>
+                <span class="key" id="keyd">D</span>
+            </div>
+        </div>
+        <div class="action_block">
+            <p class="title_keyboard">Bark</p>
+            <span class="key" id="keyspace">space</span>
+        </div>
+    </div>
+    <p>Your goal is to <strong>reach the Doggo House <img src="/images/doggo_house.png" alt="Doggo House"
+                class="doggo_house" /></strong></p>
+    <p>You can <strong>bark</strong> to remove the sleeping cats</p>
+    <p>Each bark will <strong>decrease your score</strong></p>
+    <p>If a black cat touches you, <strong>you loose</strong> !</p>
+    <a data-page="game" class="link">Play</a>
+    <a data-page="intro" class="link">Home page</a>
 </div>

@@ -1,6 +1,6 @@
 const contentMain = document.getElementById("ajaxbox");
 
-(function () {
+(function() {
   axios
     .get(`intro.html`)
     .then(res => {
@@ -15,7 +15,6 @@ const contentMain = document.getElementById("ajaxbox");
 })();
 
 function loadPage(e) {
-  let loadGame = false;
   const page = e.target.getAttribute("data-page");
   axios
     .get(`${page}.html`)
@@ -43,15 +42,15 @@ function startGame() {
   const mapBlock = `<div class="block"></div>`;
   const keyMoove = ["z", "q", "s", "d"];
   const aroundElement = 1;
-  let targetBarkCount = document.getElementById("bark_count");
+  let targetBarkCount = document.querySelector("#bark_count span");
   let score;
-  let title = document.getElementById("map_title");
+  //let title = document.getElementById("map_title");
   let emptyMap = [];
   let updatedMap;
   let mapWidth;
   let mapHeight;
   let direction;
-
+  targetMap.focus();
   // Create a map with a name, a width and a height
   function createMap(name, width, height) {
     mapWidth = width;
@@ -64,7 +63,7 @@ function startGame() {
         emptyMap[i].push("");
       }
     }
-    title.textContent = name;
+    //title.textContent = name;
     return emptyMap;
   }
   // for now it needs to be a square
@@ -213,7 +212,7 @@ function startGame() {
 
       // Creates a timeout to remove the GIF 0.5seconds after the moove
       clearTimeout(this.timeoutID);
-      this.timeoutID = setTimeout(function () {
+      this.timeoutID = setTimeout(function() {
         targetMap
           .querySelector(`.x${x}.y${y} .${getName}.main`)
           .classList.remove(`moving`);
@@ -242,20 +241,7 @@ function startGame() {
       targetBarkCount.textContent = score;
     }
     bark() {
-      let targetBarkCountP = document.getElementById("bark_count");
-
       decrementScore(score);
-
-      if (this.actionCount > 0) {
-        targetBarkCount.className = "positive";
-      }
-      if (this.actionCount === 0) {
-        targetBarkCount.className = "zero";
-      }
-      if (this.actionCount < 0) {
-        targetBarkCount.className = "negative";
-      }
-
       let targetFront;
       let targetFrontDom;
       let xTarget = this.x;
@@ -266,7 +252,7 @@ function startGame() {
       audioBark.play();
       targetFrontMain.classList.add("bark");
       clearTimeout(this.timeoutBark);
-      this.timeoutBark = setTimeout(function () {
+      this.timeoutBark = setTimeout(function() {
         targetMap;
         targetFrontMain.classList.remove(`bark`);
       }, 400);
@@ -289,11 +275,11 @@ function startGame() {
           );
           targetFrontDom.querySelector(`.removable`).classList.add("waking_up");
           audioBark.play();
-          setTimeout(function () {
+          setTimeout(function() {
             audioCatWakingUp.play();
           }, 500);
           //clearTimeout(timeoutWakingUp);
-          setTimeout(function () {
+          setTimeout(function() {
             // code
             targetFrontDom = targetMap.querySelector(
               `.x${xTarget + i}.y${yTarget + j}`
@@ -320,7 +306,7 @@ function startGame() {
       let sequenceTotal = mooveSequence.length * mooveInterval;
 
       function doSetTimeout(i) {
-        setTimeout(function () {
+        setTimeout(function() {
           getEnemy.mooveTo(mooveSequence[i]);
         }, i * mooveInterval);
       }
@@ -331,13 +317,13 @@ function startGame() {
         }
       }
       loopMooves();
-      setInterval(function () {
+      setInterval(function() {
         loopMooves();
       }, sequenceTotal);
     }
   }
   // Size of an element is currently 3*3
-  const player1 = new Doggy("Rex", "dog", 45, 45, 3);
+  const player1 = new Doggy("Rex", "dog", 1, 1, 3);
   const tree = {};
   const cat = {};
   const enemy = {};
@@ -561,7 +547,7 @@ function startGame() {
       if (targetDog) targetDog.classList.add("stop");
       if (targetEnemy) targetEnemy.classList.add("stop"); */
 
-      setTimeout(function () {
+      setTimeout(function() {
         defeat();
       }, 1500);
       //defeat();
@@ -646,15 +632,30 @@ function startGame() {
     number--;
     score = number;
     targetBarkCount.textContent = score;
-    return score
+    colorScore(score, targetBarkCount);
+    return score;
+  }
+
+  function colorScore(number, target) {
+    console.log(number);
+    if (number > 0) {
+      target.className = "positive";
+    }
+    if (number === 0) {
+      target.className = "zero";
+    }
+    if (number < 0) {
+      target.className = "negative";
+    }
   }
   // Force focus on the map
   targetMap.focus();
-  targetMap.addEventListener("focusout", e => targetMap.focus());
+  //targetMap.addEventListener("focusout", e => targetMap.focus());
 
   // listening to keyboard event
   targetMap.addEventListener("keydown", e => {
     e.preventDefault();
+    targetMap.focus();
     // Mooving actions
     if (keyMoove.includes(e.key)) {
       player1.mooveTo(e.key);
@@ -669,7 +670,7 @@ function startGame() {
   }
 
   function victory() {
-    (function () {
+    (function() {
       axios
         .get(`victory.html`)
         .then(res => {
@@ -678,18 +679,18 @@ function startGame() {
             .querySelectorAll("#ajaxbox .link")
             .forEach(link => (link.onclick = loadPage));
           //document.querySelectorAll('#victoire').forEach(element => element.innerHTML = "<p>test</p>")
-          console.log(document)
+          console.log(document);
           showScore();
         })
         .catch(err => {
           console.error(err);
         });
     })();
-
   }
 
   function showScore() {
-    const targetVictoryScore = document.querySelector('#score strong');
+    const targetVictoryScore = document.querySelector("#score strong");
+    colorScore(score, targetVictoryScore);
     targetVictoryScore.textContent = score;
   }
 
@@ -704,7 +705,6 @@ function startGame() {
           document
             .querySelectorAll("#ajaxbox .link")
             .forEach(link => (link.onclick = loadPage));
-
         })
         .catch(err => {
           console.error(err);
