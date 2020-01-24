@@ -84,13 +84,9 @@ a.link {
     box-shadow: 2px 2px 0px green;
     font-weight: bold;
     display: block;
-    max-width: 225px;
+    width: 225px;
     text-align: center;
     margin: 0 auto;
-}
-
-a.link+a.link {
-    margin-top: 15px;
 }
 
 a.link:hover {
@@ -510,19 +506,24 @@ a.link:hover {
 
 
 #rules p {
-    margin-bottom: 15px;
+    background: rgba(23, 128, 1, 0.3);
     font-weight: normal;
-    border-top: 1px solid #FFF;
-    padding-top: 15px;
+    padding: 15px;
+    margin-bottom: 5px;
 }
 
 #rules #actions_list p {
     border: none;
-    padding-top: 0;
+    padding: 5px;
+    margin-bottom: 0;
 }
 
 #rules p strong {
     font-weight: bolder;
+}
+
+#rules p:last-of-type {
+    margin-bottom: 20px;
 }
 
 #rules #actions_list #lowerkey {
@@ -543,4 +544,9 @@ a.link:hover {
 
 #rules #keyspace {
     margin-top: 24px;
+}
+
+.buttons {
+    display: flex;
+    width: 500px;
 }
